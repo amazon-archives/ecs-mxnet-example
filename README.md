@@ -144,7 +144,8 @@ You can test the API using a api client like Postman
 	
 		GET http://MLServiceUrl?image=<image-url>
 
-###Cleanup
+
+#### Cleanup
 
 * **Reset Steps**
 	1.	Scale the service down to zero running tasks.
