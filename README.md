@@ -83,8 +83,7 @@ an example url to use:
 
 The API predicts the image classification.
 
-
-####Cleanup
+#### Cleanup
 
 * **Reset Steps**
 	1.	Scale the service down to zero running tasks.
