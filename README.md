@@ -83,6 +83,7 @@ an example url to use:
 
 The API predicts the image classification.
 
+
 ####Cleanup
 
 * **Reset Steps**
