@@ -25,7 +25,7 @@ This project will create an automated workflow that will provision, configure an
 Follow the instructions below to Create and Connect to an AWS CodeCommit Repository. You may also refer to the instructions at AWS CodeCommit documentation
 
 1.	Go to AWS Console and select CodeCommit. Click **Create New repository** button.
-	Enter a unique repository name as **image-classification-predict** and a description. 
+	Enter a unique repository name as **image-classification-predict** and a description.
 	Click **Create repository**. You will get a URL to your CodeCommit repository similar to below
 	<https://git-codecommit.us-east-1.amazonaws.com/v1/repos/image-classification-predict>
 
@@ -56,7 +56,7 @@ Follow the instructions below to Create and Connect to an AWS CodeCommit Reposit
 		* Click Upload SSH Public key button. Copy the contents from file ‘mycodecommit_rsa.pub’ in the text box and save.
 
 	* Go back to terminal and type
-	
+
 			touch config
 			chmod 600 config
 			sudo vim config
@@ -82,9 +82,9 @@ Follow the instructions below to Create and Connect to an AWS CodeCommit Reposit
 			cd ~
 			git clone ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/image-classification-predict
 
-			
-				
-	
+
+
+
 	This will create a folder as the same name as <your CodeCommit Repo name> in your path where you executed the git clone command.
 
 	Copy the contents of **ecs-mxnet-example/image-classification-predict** directory into this new folder. The contents provided from `git clone git@github.com:awslabs/ecs-mxnet-example.git`
@@ -96,7 +96,7 @@ Follow the instructions below to Create and Connect to an AWS CodeCommit Reposit
 2. Change the buildspec.yml file to include your AWS account number.
 
 		<your account number>.dkr.ecr.us-east-1.amazonaws.com/swiftrepo:latest
-	
+
 	You can find your AWS account number on the right hand top corner of your AWS console.
 
 3.	Commit all of the copied contents into your CodeCommit repository.
