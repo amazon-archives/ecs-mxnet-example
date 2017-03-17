@@ -56,10 +56,10 @@ Follow the instructions below to Create and Connect to an AWS CodeCommit Reposit
 		* Click Upload SSH Public key button. Copy the contents from file ‘mycodecommit_rsa.pub’ in the text box and save.
 
 	* Go back to terminal and type
-
+	
 			touch config
 			chmod 600 config
-			sudo vim config  
+			sudo vim config
 
 
 	 and paste the following
@@ -72,18 +72,19 @@ Follow the instructions below to Create and Connect to an AWS CodeCommit Reposit
 
   * Verify your SSH connection. Type the following and confirm that you get a successful response.
 
-
-				ssh git-codecommit.us-east-1.amazonaws.com
+			ssh git-codecommit.us-east-1.amazonaws.com
 
 
 #### Step 2: Commit the Source Code and Configuration files into your CodeCommit repository
 
 1.	Clone a local copy of CodeCommit repo you created earlier in your home directory.
 
-		cd ~
-		git clone ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/image-classification-predict
+			cd ~
+			git clone ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/image-classification-predict
 
-
+			
+				
+	
 	This will create a folder as the same name as <your CodeCommit Repo name> in your path where you executed the git clone command.
 
 	Copy the contents of **ecs-mxnet-example/image-classification-predict** directory into this new folder. The contents provided from `git clone git@github.com:awslabs/ecs-mxnet-example.git`
@@ -101,7 +102,7 @@ Follow the instructions below to Create and Connect to an AWS CodeCommit Reposit
 3.	Commit all of the copied contents into your CodeCommit repository.
 
 			git add --all
-		 	git commit -m "Initial Commit"
+			git commit -m "Initial Commit"
 			git push origin master
 
 	***Tip: Verify the file .git/config for remote==”origin” and branch==”master”***
@@ -141,10 +142,11 @@ http://<stackname>-EcsElb-<container>-<image>.us-east-1.elb.amazonaws.com/
 
 **Congratulations:** Your MXNet API is live and deployed on ECS container automatically.
 You can test the API using a api client like Postman
-	
+
 		GET http://MLServiceUrl?image=<image-url>
 
-###Cleanup
+
+####Cleanup
 
 * **Reset Steps**
 	1.	Scale the service down to zero running tasks.
