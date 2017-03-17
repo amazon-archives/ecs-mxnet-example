@@ -1,0 +1,98 @@
+Description: >
+    This template creates an ECR repo, pulls code from the CodeCommit repo builds it on CodeBuild
+    and pushes it to ECR repo created.
+
+Parameters:
+    RepoName:
+      Description: CodeCommit Repo Name
+      Type: String
+      Default: image-classification-predict
+
+    RepoBranch:
+        Description: CodeCommit Repo Branch
+        Type: String
+        Default: master
+
+Resources:
+  CodePipelineCodeBuildServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: [codepipeline.amazonaws.com, codebuild.us-east-1.amazonaws.com	]
+          Action: ['sts:AssumeRole']
+      Path: /
+      Policies:
+      - PolicyName: ecs-service
+        PolicyDocument:
+          Statement:
+          - Effect: Allow
+            Action: ['ecr:*', "codebuild:*", "codepipeline:*", "s3:*", "codecommit:*", "logs:*", "cloudwatch:*"]
+            Resource: '*'
+
+  CodeBuildProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: mltestProject
+      Description: A description about my project
+      ServiceRole: !GetAtt 'CodePipelineCodeBuildServiceRole.Arn'
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        Type: linuxContainer
+        ComputeType: BUILD_GENERAL1_MEDIUM
+        Image: aws/codebuild/docker:1.12.1
+      Source:
+        Type: CODEPIPELINE
+      TimeoutInMinutes: 60
+
+  AppPipeline:
+    Type: "AWS::CodePipeline::Pipeline"
+    Properties:
+      ArtifactStore:
+        Type: S3
+        Location: "machine-learning-ecs"
+      RoleArn: !GetAtt 'CodePipelineCodeBuildServiceRole.Arn'
+      Stages:
+      -
+        Name: Source
+        Actions:
+          -
+            Name: SourceAction
+            ActionTypeId:
+              Category: Source
+              Owner: AWS
+              Version: 1
+              Provider: CodeCommit
+            OutputArtifacts:
+              -
+                Name: "CodePipelineSourceOutputArtifact"
+            Configuration:
+                BranchName: !Ref 'RepoBranch'
+                RepositoryName: !Ref 'RepoName'
+            RunOrder: 1
+      -
+        Name: Build
+        Actions:
+          -
+            Name: BuildAction
+            InputArtifacts:
+              -
+                Name: "CodePipelineSourceOutputArtifact"
+            ActionTypeId:
+              Category: Build
+              Owner: AWS
+              Version: 1
+              Provider: CodeBuild
+            Configuration:
+                ProjectName:
+                  Ref: CodeBuildProject
+            OutputArtifacts:
+              -
+                Name: "CodePipelineBuildOutputArtifact"
+            RunOrder: 1
+Outputs:
+  PipeLineUrl:
+    Value: !Ref 'AppPipeline'
