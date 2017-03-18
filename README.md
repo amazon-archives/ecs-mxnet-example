@@ -19,7 +19,7 @@ Also, change the permission on your keypair with the following command.
 
 #### Create a CodeCommit repository and Connect with this repository
 
-1.	Clone the github repository : git clone <repo>
+1.	Clone this github repository : git clone https://github.com/awslabs/ecs-mxnet-example.git
 
 2.	Go to AWS Console and select CodeCommit. Click Create New repository button. Enter a unique repository name( use image-classification-predict for this blog) and a description ex. machineeye-predict and click Create repository. You will get a URL to your CodeCommit repository similar to below https://git-codecommit.us-east-1.amazonaws.com/v1/repos/machineeye-predict
 
