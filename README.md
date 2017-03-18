@@ -82,8 +82,9 @@ The API predicts the image classification.
 #### Cleanup
 
 * **Reset Steps**
-	2.  Delete the ECR Repository
-	3.	Delete the CloudFormation stack and re-create it.
+	
+	1.  Delete the ECR Repository
+	2.	Delete the CloudFormation stack and re-create it.
 
 * **Removal Steps**
 	1.	Delete the ECR Repository
