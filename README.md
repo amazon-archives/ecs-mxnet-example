@@ -77,7 +77,7 @@ an example url to use:
 
 	https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Golden_Gate_Bridge,_San_Francisco,_California_LCCN2013633353.tif/lossy-page1-450px-Golden_Gate_Bridge,_San_Francisco,_California_LCCN2013633353.tif.jpg
 
-The API predicts the image classification.
+The API predicts that theimage is a suspension bridge with 62% probability.
 
 #### Cleanup
 
