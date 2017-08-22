@@ -92,6 +92,7 @@ Resources:
     Type: AWS::ECS::TaskDefinition
     Properties:
       Family: !Join ['', [!Ref 'AWS::StackName', -ecs-demo-app]]
+      TaskRoleArn: !Ref ECSTaskRole
       ContainerDefinitions:
       - Name: simple-app
         Cpu: '4096'
@@ -106,6 +107,31 @@ Resources:
             awslogs-stream-prefix: ecs-demo-app
         PortMappings:
         - ContainerPort: 5000
+  ECSTaskRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - ecs-tasks.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: "/"
+  RolePolicies:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: root
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action: "s3:*"
+          Resource: "*"
+      Roles:
+      - !Ref ECSTaskRole
   ECSALB:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
@@ -177,6 +203,7 @@ Resources:
         Fn::Base64: !Sub |
           #!/bin/bash -xe
           echo ECS_CLUSTER=${ECSCluster} >> /etc/ecs/ecs.config
+          yum update -y
           yum install -y aws-cfn-bootstrap
           /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource ECSAutoScalingGroup --region ${AWS::Region}
   service:
