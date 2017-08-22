@@ -27,7 +27,7 @@ Resources:
   ECS:
         Type: AWS::CloudFormation::Stack
         Properties:
-            TemplateURL:  https://s3.amazonaws.com/ecs-mxnet-example-python/ecs-template.yaml
+            TemplateURL:  https://s3.amazonaws.com/mxnet-template-cicd-feb27/ecs-template.yaml
             Parameters:
                 InstanceType: c4.8xlarge
                 VpcId: !GetAtt VPC.Outputs.VPC
@@ -36,11 +36,11 @@ Resources:
   Build:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://s3.amazonaws.com/ecs-mxnet-example-python/cicd.yaml
+      TemplateURL: https://s3.amazonaws.com/mxnet-template-cicd-feb27/cicd.yaml
 
 
 Outputs:
 
     MLServiceUrl:
         Description: The URL endpoint for the ML service
-        Value: !Join [ "/", [ 'http:/', !GetAtt ECS.Outputs.ECSALB, "img" ]]
+        Value: !Join [ "/", [ 'http:/', !GetAtt ECS.Outputs.ECSALB, "image" ]]
