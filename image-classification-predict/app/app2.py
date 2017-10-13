@@ -13,6 +13,9 @@ from flask import Flask, Response
 from flask import request
 from flask import jsonify
 
+from botocore import UNSIGNED
+from botocore.config import Config
+
 Batch = namedtuple('Batch', ['data'])
 
 #download model files
@@ -21,7 +24,7 @@ f_symbol = 'resnet-18-symbol.json'
 
 bucket = 'ecs-mxnet-example'
 s3 = boto3.resource('s3')
-s3_client = boto3.client('s3')
+s3_client = boto3.client('s3', config=Config(signature_version=UNSIGNED))
 
 #params
 f_params_file = tempfile.NamedTemporaryFile()
